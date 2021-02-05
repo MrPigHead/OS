@@ -72,4 +72,4 @@ LABEL_SEG_CODE32:
 	
 	jmp $
 
-SegCode32Len	equ	$-LABEL_SEG_CODE32
+SegCode32Len	equ	$ - LABEL_SEG_CODE32
