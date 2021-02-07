@@ -81,6 +81,16 @@ LABEL_BEGIN:
 	mov		byte	[LABEL_DESC_CODE32 + 4],	al
 	mov		byte	[LABEL_DESC_CODE32 + 7],	ah
 	
+	; 初始化数据段描述符
+	xor		eax,	eax
+	mov		ax,		ds
+	shl		eax,	4
+	add		eax,	LABEL_DATA
+	mov		word	[LABEL_DESC_DATA + 2], ax
+	shr		eax,	16
+	mov		byte	[LABEL_DESC_DATA + 4],	al
+	mov		byte	[LABEL_DESC_DATA + 7],	ah
+	
 	; 初始化堆栈段描述符
 	xor		eax,	eax
 	mov		ax,		ds
