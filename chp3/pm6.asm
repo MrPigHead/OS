@@ -12,7 +12,7 @@ LABEL_GDT:				Descriptor	0,				0,					0
 LABEL_DESC_NORMAL:		Descriptor	0,				0ffffh,				DA_DRW
 LABEL_DESC_CODE32:		Descriptor	0,				SegCode32Len - 1,	DA_C + DA_32
 LABEL_DESC_CODE16:		Descriptor	0,				0ffffh,				DA_C
-LABEL_DESC_DATA:	Descriptor	0,			DataLen - 1,		DA_DRW
+LABEL_DESC_DATA:		Descriptor	0,				DataLen - 1,		DA_DRW
 LABEL_DESC_STACK:		Descriptor	0,				TopOfStack,			DA_DRWA + DA_32
 LABEL_DESC_VIDEO:		Descriptor	0b8000h,		0ffffh,				DA_DRW
 LABEL_DESC_PAGE_DIR:	Descriptor	PageDirBase,	4095,				DA_DRW
@@ -137,6 +137,11 @@ LABEL_REAL_ENTRY:
 [SECTION	.s32]
 [BITS		32]
 LABEL_SEG_CODE32:
+	call	SetupPaging
+	
+	; 数据段、视频段
+	mov		ax,	SelectorData
+	mov		ds,	ax
 	mov		ax,	SelectorVideo
 	mov		gs,	ax
 	
@@ -194,9 +199,9 @@ SetupPaging:
 	mov		eax,	PageDirBase
 	mov		cr3,	eax
 	mov		eax,	cr0
-	mov		eax,	80000000h
+	or		eax,	80000000h
 	mov		cr0,	eax
-	jmp		short	.3
+	jmp		short 	.3
 .3:
 	nop
 	
@@ -218,7 +223,7 @@ LABEL_SEG_CODE16:
 	
 	; 切换实模式
 	mov		eax,	cr0
-	and		al,		11111110b
+	and		eax,	7ffffffeh
 	mov		cr0,	eax
 
 LABEL_GO_BACK_TO_REAL:
