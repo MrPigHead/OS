@@ -38,6 +38,10 @@ GitHub地址：https://github.com/MrPigHead/OS
 
 [下载](http://www.chrysocome.net/downloads/dd-0.6beta3.zip)
 
+### FreeDOS镜像
+
+[下载](http://bochs.sourceforge.net/guestos/freedos-img.tar.gz)
+
 ## 鸣谢
 
 本书作者：于渊
